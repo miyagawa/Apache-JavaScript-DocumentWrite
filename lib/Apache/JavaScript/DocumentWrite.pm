@@ -2,7 +2,7 @@ package Apache::JavaScript::DocumentWrite;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.01;
+$VERSION = 0.02;
 
 use Apache::Constants qw(:common);
 use Apache::File ();
@@ -26,12 +26,13 @@ sub document_write_handler {
     $r->content_type('text/plain');
     $r->send_http_header();
     return OK if $r->header_only;
-    $r->print(q!document.writeln('!);
     while (<$fh>) {
+	chomp;
 	s/\x27/&#x27;/g; # '
-	print;
+	print "document.writeln('$_');\n";
     }
-    $r->print(qq!');\n!);
+
+    return OK;
 }
 
 1;

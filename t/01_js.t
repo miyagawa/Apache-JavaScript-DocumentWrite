@@ -11,6 +11,6 @@ plan tests => 3, have_lwp;
 
 {
     my $body = GET_BODY "/test.html.js";
-    ok($body, qr/document\.write/);
+    ok($body, qr/document\.writeln/);
     ok($body, qr/It&#x27;s a module/);
 }
